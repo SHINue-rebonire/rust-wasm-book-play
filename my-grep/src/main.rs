@@ -11,10 +11,10 @@ struct Cli {
 fn start(cli: Cli) -> anyhow::Result<()> {
     let file = File::open(&cli.file_name)?;
     let reader = BufReader::new(file);
-    for line in reader.lines() {
+    for (index, line) in reader.lines().enumerate() {
         let line = line?;
         if line.contains(&cli.pattern) {
-            println!("{line}");
+            println!("{}:\t{}", index + 1, line);
         }
     }
     Ok(())
